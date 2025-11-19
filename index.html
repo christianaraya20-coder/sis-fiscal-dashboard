@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Análisis F29 - SIS Sep 2024 - Oct 2025</title>
+    <title>Análisis F29 - SIS</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
-            --color-bg: #f5f7fa;
-            --color-surface: #ffffff;
-            --color-text: #1f3a5f;
-            --color-text-secondary: #64748b;
-            --color-primary: #1f3a5f;
-            --color-accent: #ea580c;
-            --color-error: #dc2626;
-            --color-success: #2563eb;
-            --color-border: #e2e8f0;
-            --shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --color-bg: #0f172a;
+            --color-surface: #1e293b;
+            --color-text: #ffffff;
+            --color-text-secondary: #cbd5e1;
+            --color-primary: #3b82f6;
+            --color-primary-dark: #1e40af;
+            --color-success: #10b981;
+            --color-warning: #f59e0b;
+            --color-error: #ef4444;
+            --color-border: #334155;
         }
         
         * {
@@ -25,417 +25,454 @@
             box-sizing: border-box;
         }
         
-        html, body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
             background-color: var(--color-bg);
             color: var(--color-text);
             line-height: 1.6;
         }
         
-        .container {
-            max-width: 1200px;
+        header {
+            background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
+            padding: 2rem 1rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        
+        .header-container {
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 32px 16px;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
         }
         
-        .header {
-            background: linear-gradient(135deg, var(--color-primary) 0%, #2d5a8c 100%);
-            color: white;
-            padding: 40px;
-            border-radius: 12px;
-            margin-bottom: 32px;
-            text-align: center;
-            box-shadow: var(--shadow);
+        .logo {
+            width: 60px;
+            height: 60px;
         }
         
-        .header h1 {
-            font-size: 28px;
-            margin-bottom: 8px;
+        .header-text h1 {
+            font-size: 2rem;
             font-weight: 700;
+            margin-bottom: 0.25rem;
         }
         
-        .header p {
-            font-size: 16px;
-            opacity: 0.95;
+        .header-text p {
+            font-size: 0.875rem;
+            opacity: 0.9;
         }
         
-        .card {
-            background: var(--color-surface);
-            border-radius: 8px;
-            padding: 24px;
-            margin-bottom: 24px;
-            box-shadow: var(--shadow);
+        main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            padding: 0.75rem 1rem;
+            background-color: var(--color-surface);
             border: 1px solid var(--color-border);
+            border-radius: 0.5rem;
+            color: var(--color-text);
+            font-size: 1rem;
         }
         
-        .card h2 {
-            color: var(--color-primary);
-            margin-bottom: 16px;
-            font-size: 18px;
+        .search-box::placeholder {
+            color: var(--color-text-secondary);
+        }
+        
+        .search-box:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        
+        button {
+            padding: 0.75rem 1.5rem;
+            background-color: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
             font-weight: 600;
+            transition: all 0.2s ease;
+            font-size: 0.95rem;
         }
         
-        .table-wrapper {
+        button:hover {
+            background-color: var(--color-primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .table-section {
+            background-color: var(--color-surface);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
             overflow-x: auto;
-            margin-top: 16px;
         }
         
         table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 14px;
         }
         
         thead {
-            background: linear-gradient(135deg, var(--color-primary) 0%, #2d5a8c 100%);
-            color: white;
+            background-color: var(--color-primary);
         }
         
         th {
-            padding: 12px;
-            text-align: left;
+            padding: 1rem;
+            text-align: right;
             font-weight: 600;
-            cursor: pointer;
-            white-space: nowrap;
-            user-select: none;
+            font-size: 0.95rem;
         }
         
-        th:hover {
-            background: rgba(0, 0, 0, 0.1);
+        th:first-child {
+            text-align: center;
         }
         
         td {
-            padding: 12px;
+            padding: 0.875rem 1rem;
             border-bottom: 1px solid var(--color-border);
-        }
-        
-        tbody tr:hover {
-            background-color: #f9fafb;
-        }
-        
-        tbody tr:nth-child(even) {
-            background-color: #fafbfc;
-        }
-        
-        .number {
             text-align: right;
-            font-family: 'Monaco', 'Courier New', monospace;
-            font-size: 13px;
+            font-size: 0.95rem;
         }
         
-        .debito {
-            color: var(--color-error);
+        td:first-child {
+            text-align: center;
             font-weight: 500;
         }
         
-        .credito {
-            color: var(--color-success);
-            font-weight: 500;
+        tr:hover {
+            background-color: rgba(59, 130, 246, 0.1);
         }
         
-        .iva-determinado {
-            color: var(--color-accent);
-            font-weight: 600;
-        }
-        
-        .total-pagar {
-            color: var(--color-accent);
-            font-weight: 700;
-            background-color: rgba(234, 88, 12, 0.1);
-            padding: 4px 8px;
-            border-radius: 4px;
-        }
-        
-        .search-box {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-        
-        .search-box input,
-        .search-box select {
-            padding: 10px 12px;
-            border: 2px solid var(--color-border);
-            border-radius: 6px;
-            font-size: 14px;
-            transition: border-color 0.3s;
-            background: white;
-        }
-        
-        .search-box input:focus,
-        .search-box select:focus {
-            outline: none;
-            border-color: var(--color-primary);
-            box-shadow: 0 0 0 3px rgba(31, 58, 95, 0.1);
-        }
-        
-        .search-box input {
-            flex: 1;
-            min-width: 200px;
+        .chart-section {
+            background-color: var(--color-surface);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
         
         .chart-container {
             position: relative;
-            height: 400px;
-            margin: 24px 0;
+            height: 300px;
+            margin-bottom: 1rem;
         }
         
         .insights {
-            background: linear-gradient(135deg, rgba(234, 88, 12, 0.08) 0%, rgba(239, 68, 68, 0.08) 100%);
-            padding: 24px;
-            border-radius: 8px;
-            border-left: 4px solid var(--color-accent);
-            margin: 20px 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
         }
         
-        .insight-item {
-            margin-bottom: 12px;
-            font-size: 14px;
-            line-height: 1.6;
+        .insight-card {
+            background-color: var(--color-surface);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            border-left: 4px solid var(--color-primary);
         }
         
-        .insight-item strong {
-            color: var(--color-accent);
-        }
-        
-        .actions {
-            display: flex;
-            gap: 12px;
-            margin-top: 20px;
-            flex-wrap: wrap;
-        }
-        
-        .btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 600;
-            transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, var(--color-primary) 0%, #2d5a8c 100%);
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(31, 58, 95, 0.2);
-        }
-        
-        .btn-secondary {
-            background: var(--color-bg);
-            color: var(--color-primary);
-            border: 2px solid var(--color-border);
-        }
-        
-        .btn-secondary:hover {
-            border-color: var(--color-primary);
-        }
-        
-        .footer {
-            text-align: center;
+        .insight-label {
+            font-size: 0.875rem;
             color: var(--color-text-secondary);
-            font-size: 12px;
-            margin-top: 32px;
-            padding-top: 16px;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .insight-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+        
+        footer {
+            background-color: var(--color-surface);
+            padding: 1.5rem;
+            text-align: center;
             border-top: 1px solid var(--color-border);
+            color: var(--color-text-secondary);
+            font-size: 0.875rem;
+            margin-top: 2rem;
+        }
+        
+        .hide {
+            display: none;
         }
         
         @media (max-width: 768px) {
-            .header { padding: 24px 16px; }
-            .header h1 { font-size: 20px; }
-            table { font-size: 12px; }
-            th, td { padding: 8px; }
-            .chart-container { height: 300px; }
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .header-text h1 {
+                font-size: 1.5rem;
+            }
+            
+            .controls {
+                flex-direction: column;
+            }
+            
+            .search-box {
+                min-width: 100%;
+            }
+            
+            table {
+                font-size: 0.85rem;
+            }
+            
+            th, td {
+                padding: 0.5rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>Análisis F29 - Empresa SIS</h1>
-            <p>Período Septiembre 2024 - Octubre 2025</p>
-        </div>
-        
-        <div class="card">
-            <h2>Datos Fiscales Mensuales</h2>
-            
-            <div class="search-box">
-                <input type="text" id="searchInput" placeholder="Buscar por mes o año...">
-                <select id="sortOrder">
-                    <option value="asc">Orden: Antiguo a Reciente</option>
-                    <option value="desc">Orden: Reciente a Antiguo</option>
-                </select>
-            </div>
-            
-            <div class="table-wrapper">
-                <table id="taxTable">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Período</th>
-                            <th class="number">Débito IVA</th>
-                            <th class="number">Crédito Fiscal</th>
-                            <th class="number">Remanente Anterior</th>
-                            <th class="number">Total Créditos</th>
-                            <th class="number">IVA Determinado</th>
-                            <th class="number">Total a Pagar</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tableBody"></tbody>
-                </table>
-            </div>
-            
-            <div class="actions">
-                <button class="btn btn-primary" onclick="exportToCSV()">📥 Exportar CSV</button>
-                <button class="btn btn-secondary" onclick="window.print()">🖨️ Imprimir</button>
+    <header>
+        <div class="header-container">
+            <svg class="logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="45" fill="white" opacity="0.1"/>
+                <path d="M 50 20 L 80 80 L 20 80 Z" fill="none" stroke="white" stroke-width="3"/>
+                <text x="50" y="65" font-size="30" font-weight="bold" text-anchor="middle" fill="white">SIS</text>
+            </svg>
+            <div class="header-text">
+                <h1>Análisis Impuesto F29</h1>
+                <p>Servicios Informáticos Santiago SpA</p>
             </div>
         </div>
+    </header>
+    
+    <main>
+        <div class="controls">
+            <input type="text" class="search-box" id="searchInput" placeholder="Buscar por período...">
+            <button onclick="exportToCSV()">📥 Descargar CSV</button>
+            <button onclick="printTable()">🖨️ Imprimir</button>
+        </div>
         
-        <div class="card">
-            <h2>Visualización de Datos</h2>
-            <div class="chart-wrapper">
-                <canvas id="barChart"></canvas>
+        <div class="insights">
+            <div class="insight-card">
+                <div class="insight-label">Total Períodos</div>
+                <div class="insight-value" id="totalPeriods">14</div>
+            </div>
+            <div class="insight-card">
+                <div class="insight-label">Total a Pagar</div>
+                <div class="insight-value" id="totalPayable">$0</div>
+            </div>
+            <div class="insight-card">
+                <div class="insight-label">Promedio Mensual</div>
+                <div class="insight-value" id="avgMonthly">$0</div>
+            </div>
+            <div class="insight-card">
+                <div class="insight-label">Mayor Pago</div>
+                <div class="insight-value" id="maxPayment">$0</div>
             </div>
         </div>
         
-        <div class="card">
-            <div class="insights">
-                <h3 style="color: var(--color-accent); margin-bottom: 16px; font-size: 16px;">📊 Conclusiones Clave del Análisis</h3>
-                <div class="insight-item"><strong>Decremento Dramático en Octubre 2025:</strong> El total a pagar experimenta un aumento significativo alcanzando $12.012.875 en octubre 2025, comparado con los meses anteriores que mostraban pagos mucho menores desde abril a septiembre 2025.</div>
-                <div class="insight-item"><strong>Alerta:</strong> En octubre 2025, el débito IVA cae dramáticamente a $5.188.618, pero el IVA determinado salta a $11.479.109, resultando en el segundo total a pagar más alto del período después de los primeros meses.</div>
-                <div class="insight-item"><strong>Consumo del Remanente:</strong> Durante el período analizado, se observa una disminución constante del remanente anterior, que pasa de $101.889.582 en septiembre 2024 a $0 en octubre 2025. Este remanente ha sido fundamental para reducir los pagos mensuales.</div>
-                <div class="insight-item"><strong>Relación Débito-Crédito:</strong> El crédito fiscal mensual es consistentemente bajo (promedio de $1.3M) en comparación con el débito IVA (promedio de $12.5M), lo que significa que la empresa depende fuertemente del remanente acumulado.</div>
-                <div class="insight-item"><strong>Recomendación Estratégica:</strong> Es crítico aumentar el crédito fiscal mediante la optimización de compras con IVA recuperable, ya que una vez agotado el remanente como en octubre 2025, los pagos de IVA aumentarán significativamente.</div>
-            </div>
+        <div class="table-section">
+            <h2 style="margin-bottom: 1.5rem; font-size: 1.25rem;">Detalle Mensual F29</h2>
+            <table id="dataTable">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Período</th>
+                        <th>Débito IVA</th>
+                        <th>Crédito Fiscal</th>
+                        <th>Remanente Anterior</th>
+                        <th>Total Créditos</th>
+                        <th>IVA Determinado</th>
+                        <th>Total a Pagar</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                </tbody>
+            </table>
         </div>
         
-        <div class="footer">
-            Dashboard generado automáticamente | Datos correspondientes a Formulario 29 SIS | Actualización: Nov 2025
+        <div class="chart-section">
+            <h2 style="margin-bottom: 1.5rem; font-size: 1.25rem;">Gráfico de Pagos Mensuales</h2>
+            <div class="chart-container">
+                <canvas id="paymentChart"></canvas>
+            </div>
         </div>
-    </div>
+    </main>
+    
+    <footer>
+        <p>Desarrollado por <strong>Christian Araya</strong> — Área Negocios, Administración y Finanzas</p>
+        <p style="margin-top: 0.5rem; opacity: 0.7;">© 2025 Servicios Informáticos Santiago SpA. Todos los derechos reservados.</p>
+    </footer>
     
     <script>
-        const taxData = [
-            {mes: 1, periodo: 'Sep 2024', debitoiva: 10887550, creditofiscal: 1052977, remanenteanterior: 101889582, totalcreditos: 143949466, ivadeterminado: 0, totalapagar: 8048727},
-            {mes: 2, periodo: 'Oct 2024', debitoiva: 10963713, creditofiscal: 560643, remanenteanterior: 133196035, totalcreditos: 133658584, ivadeterminado: 0, totalapagar: 7228874},
-            {mes: 3, periodo: 'Nov 2024', debitoiva: 12847071, creditofiscal: 967626, remanenteanterior: 123921228, totalcreditos: 124882552, ivadeterminado: 0, totalapagar: 8127017},
-            {mes: 4, periodo: 'Dic 2024', debitoiva: 13134424, creditofiscal: 1198518, remanenteanterior: 112260519, totalcreditos: 113457011, ivadeterminado: 0, totalapagar: 8274356},
-            {mes: 5, periodo: 'Ene 2025', debitoiva: 13265713, creditofiscal: 1087018, remanenteanterior: 100122032, totalcreditos: 101192150, ivadeterminado: 0, totalapagar: 8426930},
-            {mes: 6, periodo: 'Feb 2025', debitoiva: 13292326, creditofiscal: 1621786, remanenteanterior: 88893224, totalcreditos: 90515010, ivadeterminado: 0, totalapagar: 8483574},
-            {mes: 7, periodo: 'Mar 2025', debitoiva: 13265713, creditofiscal: 1959323, remanenteanterior: 77531408, totalcreditos: 79490731, ivadeterminado: 0, totalapagar: 7996662},
-            {mes: 8, periodo: 'Abr 2025', debitoiva: 13411590, creditofiscal: 1156461, remanenteanterior: 66556295, totalcreditos: 67712756, ivadeterminado: 0, totalapagar: 344715},
-            {mes: 9, periodo: 'May 2025', debitoiva: 13465210, creditofiscal: 2299223, remanenteanterior: 54409534, totalcreditos: 56598647, ivadeterminado: 0, totalapagar: 530185},
-            {mes: 10, periodo: 'Jun 2025', debitoiva: 13532628, creditofiscal: 831695, remanenteanterior: 43220235, totalcreditos: 44051930, ivadeterminado: 0, totalapagar: 624172},
-            {mes: 11, periodo: 'Jul 2025', debitoiva: 13559635, creditofiscal: 1669222, remanenteanterior: 30397088, totalcreditos: 32066310, ivadeterminado: 0, totalapagar: 506927},
-            {mes: 12, periodo: 'Aug 2025', debitoiva: 13586839, creditofiscal: 1351430, remanenteanterior: 18673151, totalcreditos: 20024581, ivadeterminado: 0, totalapagar: 499771},
-            {mes: 13, periodo: 'Sep 2025', debitoiva: 13532431, creditofiscal: 1165190, remanenteanterior: 6437489, totalcreditos: 7602679, ivadeterminado: 5929752, totalapagar: 7055554},
-            {mes: 14, periodo: 'Oct 2025', debitoiva: 5188618, creditofiscal: 2175149, remanenteanterior: 0, totalcreditos: 2175149, ivadeterminado: 11479109, totalapagar: 12012875}
+        const data = [
+            { periodo: 'Sep 2024', debito: 10887550, credito: 1052977, remanente: 101889582, totalCreditos: 102942559, ivaDeterm: 8835573, totalPagar: 8048727 },
+            { periodo: 'Oct 2024', debito: 10963713, credito: 560643, remanente: 133196035, totalCreditos: 133756678, ivaDeterm: 7667539, totalPagar: 7228874 },
+            { periodo: 'Nov 2024', debito: 12847071, credito: 967626, remanente: 123921228, totalCreditos: 124888854, ivaDeterm: 8127017, totalPagar: 8127017 },
+            { periodo: 'Dic 2024', debito: 13134424, credito: 1198518, remanente: 112260519, totalCreditos: 113459037, ivaDeterm: 8274356, totalPagar: 8274356 },
+            { periodo: 'Ene 2025', debito: 13265713, credito: 1087018, remanente: 100122032, totalCreditos: 101209050, ivaDeterm: 8426930, totalPagar: 8426930 },
+            { periodo: 'Feb 2025', debito: 13292326, credito: 1621786, remanente: 88893224, totalCreditos: 90515010, ivaDeterm: 8483574, totalPagar: 8483574 },
+            { periodo: 'Mar 2025', debito: 13265713, credito: 1959323, remanente: 77531408, totalCreditos: 79490731, ivaDeterm: 7996662, totalPagar: 7996662 },
+            { periodo: 'Abr 2025', debito: 13411590, credito: 1156461, remanente: 66556295, totalCreditos: 67712756, ivaDeterm: 5398430, totalPagar: 344715 },
+            { periodo: 'May 2025', debito: 13465210, credito: 2299223, remanente: 54409534, totalCreditos: 56708757, ivaDeterm: 6859942, totalPagar: 530185 },
+            { periodo: 'Jun 2025', debito: 13532628, credito: 831695, remanente: 43220235, totalCreditos: 44051930, ivaDeterm: 9268568, totalPagar: 624172 },
+            { periodo: 'Jul 2025', debito: 13559635, credito: 1669222, remanente: 30397088, totalCreditos: 32066310, ivaDeterm: 7504862, totalPagar: 506927 },
+            { periodo: 'Ago 2025', debito: 13586839, credito: 1351430, remanente: 18673151, totalCreditos: 20024581, ivaDeterm: 6074610, totalPagar: 499771 },
+            { periodo: 'Sep 2025', debito: 13532431, credito: 1165190, remanente: 6437489, totalCreditos: 7602679, ivaDeterm: 5929752, totalPagar: 7055554 },
+            { periodo: 'Oct 2025', debito: 5188618, credito: 2175149, remanente: 0, totalCreditos: 2175149, ivaDeterm: 11479109, totalPagar: 12012875 }
         ];
         
-        let currentData = [...taxData];
-        let currentSort = 'asc';
-        
         function formatCurrency(value) {
-            return value.toLocaleString('es-CL', {style: 'currency', currency: 'CLP', minimumFractionDigits: 0});
+            return new Intl.NumberFormat('es-CL', {
+                style: 'currency',
+                currency: 'CLP',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            }).format(value);
         }
         
-        function renderTable(data) {
+        function populateTable(filteredData = data) {
             const tbody = document.getElementById('tableBody');
             tbody.innerHTML = '';
-            data.forEach((row, idx) => {
+            
+            filteredData.forEach((row, index) => {
                 const tr = document.createElement('tr');
-                tr.innerHTML = `<td>${row.mes}</td><td>${row.periodo}</td><td class="number debito">${formatCurrency(row.debitoiva)}</td><td class="number credito">${formatCurrency(row.creditofiscal)}</td><td class="number">${formatCurrency(row.remanenteanterior)}</td><td class="number">${formatCurrency(row.totalcreditos)}</td><td class="number iva-determinado">${formatCurrency(row.ivadeterminado)}</td><td class="number total-pagar">${formatCurrency(row.totalapagar)}</td>`;
+                tr.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${row.periodo}</td>
+                    <td>${formatCurrency(row.debito)}</td>
+                    <td>${formatCurrency(row.credito)}</td>
+                    <td>${formatCurrency(row.remanente)}</td>
+                    <td>${formatCurrency(row.totalCreditos)}</td>
+                    <td>${formatCurrency(row.ivaDeterm)}</td>
+                    <td><strong>${formatCurrency(row.totalPagar)}</strong></td>
+                `;
                 tbody.appendChild(tr);
             });
         }
         
-        function filterAndSort() {
-            const search = document.getElementById('searchInput').value.toLowerCase();
-            const sort = document.getElementById('sortOrder').value;
-            currentSort = sort;
-            let filtered = taxData.filter(row => row.periodo.toLowerCase().includes(search));
-            if (sort === 'desc') {
-                filtered.reverse();
-            }
-            currentData = filtered;
-            renderTable(filtered);
+        function updateInsights() {
+            const totalPagar = data.reduce((sum, row) => sum + row.totalPagar, 0);
+            const avgMonthly = totalPagar / data.length;
+            const maxPayment = Math.max(...data.map(d => d.totalPagar));
+            
+            document.getElementById('totalPayable').textContent = formatCurrency(totalPagar);
+            document.getElementById('avgMonthly').textContent = formatCurrency(avgMonthly);
+            document.getElementById('maxPayment').textContent = formatCurrency(maxPayment);
         }
         
-        document.getElementById('searchInput').addEventListener('input', filterAndSort);
-        document.getElementById('sortOrder').addEventListener('change', filterAndSort);
-        
-        const labels = taxData.map(d => d.periodo);
-        const totalPagar = taxData.map(d => d.totalapagar);
-        
-        const ctx = document.getElementById('barChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: labels,
+        function createChart() {
+            const ctx = document.getElementById('paymentChart').getContext('2d');
+            
+            const chartData = {
+                labels: data.map(d => d.periodo),
                 datasets: [{
-                    label: 'Total a Pagar',
-                    data: totalPagar,
-                    backgroundColor: '#ea580c',
-                    borderColor: '#c2410c',
-                    borderWidth: 1,
+                    label: 'Total a Pagar (CLP)',
+                    data: data.map(d => d.totalPagar),
+                    backgroundColor: 'rgba(59, 130, 246, 0.7)',
+                    borderColor: 'rgb(59, 130, 246)',
+                    borderWidth: 2,
                     borderRadius: 4
                 }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    title: {
-                        display: true,
-                        text: 'Total a Pagar Mensual - Identificación de Picos',
-                        font: {size: 14, weight: 'bold'},
-                        color: '#1f3a5f'
-                    },
-                    legend: {display: true, position: 'top'}
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            callback: function(value) {
-                                return '$' + (value / 1000000).toFixed(1) + 'M';
-                            }
+            };
+            
+            return new Chart(ctx, {
+                type: 'bar',
+                data: chartData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: { color: '#ffffff' }
                         }
                     },
-                    x: {
-                        ticks: {
-                            maxRotation: 45,
-                            minRotation: 45
+                    scales: {
+                        y: {
+                            ticks: { color: '#cbd5e1' },
+                            grid: { color: '#334155' },
+                            title: { display: true, text: 'Monto (CLP)', color: '#ffffff' }
+                        },
+                        x: {
+                            ticks: { color: '#cbd5e1' },
+                            grid: { color: '#334155' }
                         }
                     }
                 }
-            }
+            });
+        }
+        
+        document.getElementById('searchInput').addEventListener('keyup', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const filteredData = data.filter(row => 
+                row.periodo.toLowerCase().includes(searchTerm)
+            );
+            populateTable(filteredData);
         });
         
         function exportToCSV() {
-            const headers = 'Mes,Período,Débito IVA,Crédito Fiscal,Remanente Anterior,Total Créditos,IVA Determinado,Total a Pagar';
-            const rows = currentData.map(row => `${row.mes},${row.periodo},${row.debitoiva},${row.creditofiscal},${row.remanenteanterior},${row.totalcreditos},${row.ivadeterminado},${row.totalapagar}`);
-            let csvContent = headers + '\n' + rows.join('\n');
-            const blob = new Blob([csvContent], {type: 'text/csvcharset=utf-8'});
+            let csv = '#,Período,Débito IVA,Crédito Fiscal,Remanente Anterior,Total Créditos,IVA Determinado,Total a Pagar\n';
+            
+            data.forEach((row, index) => {
+                csv += `${index + 1},${row.periodo},${row.debito},${row.credito},${row.remanente},${row.totalCreditos},${row.ivaDeterm},${row.totalPagar}\n`;
+            });
+            
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a');
             const url = URL.createObjectURL(blob);
             link.setAttribute('href', url);
-            link.setAttribute('download', 'analisis-f29-sis.csv');
+            link.setAttribute('download', 'F29_Analisis_SIS.csv');
             link.style.visibility = 'hidden';
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
         }
         
-        renderTable(taxData);
+        function printTable() {
+            const printWindow = window.open('', '', 'height=600,width=900');
+            let printContent = '<html><head><title>Analisis F29 - SIS</title>';
+            printContent += '<style>';
+            printContent += 'body { font-family: Arial; background: white; color: black; }';
+            printContent += 'h1 { text-align: center; color: #1e40af; }';
+            printContent += 'table { width: 100%; border-collapse: collapse; margin-top: 20px; }';
+            printContent += 'th, td { border: 1px solid #333; padding: 8px; text-align: right; }';
+            printContent += 'th { background-color: #1e40af; color: white; }';
+            printContent += 'th:first-child, td:first-child { text-align: center; }';
+            printContent += '</style></head><body>';
+            printContent += '<h1>Analisis Impuesto F29</h1>';
+            printContent += '<p style="text-align: center;">Servicios Informaticos Santiago SpA</p>';
+            printContent += document.getElementById('dataTable').innerHTML;
+            printContent += '</body></html>';
+            printWindow.document.write(printContent);
+            printWindow.document.close();
+            printWindow.print();
+        }
+        
+        window.addEventListener('DOMContentLoaded', function() {
+            populateTable();
+            updateInsights();
+            createChart();
+        });
     </script>
 </body>
 </html>
