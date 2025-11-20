@@ -168,6 +168,16 @@
             content: "⚠";
             color: var(--color-error);
         }
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+  <div style="background: white; border: 1px solid var(--color-border); border-radius: 0.75rem; padding: 1.5rem;">
+    <h3 style="margin-bottom: 1rem; color: var(--color-text);">Evolucion del Remanente Fiscal</h3>
+    <canvas id="chartRemanente" style="max-height: 300px;"></canvas>
+  </div>
+  <div style="background: white; border: 1px solid var(--color-border); border-radius: 0.75rem; padding: 1.5rem;">
+    <h3 style="margin-bottom: 1rem; color: var(--color-text);">Pagos Mensuales F29</h3>
+    <canvas id="chartPagos" style="max-height: 300px;"></canvas>
+  </div>
+</div>
         .table-wrapper {
             overflow-x: auto;
             margin-bottom: 2rem;
@@ -238,31 +248,31 @@
         <div class="metrics">
             <div class="metric-card">
                 <h3>Total Pagado</h3>
-                <div class="value">$290.5M</div>
+                <div class="value">$290.500.000</div>
                 <p class="subtext">36 meses (Sep 2022 - Oct 2025)</p>
             </div>
             <div class="metric-card">
                 <h3>Promedio Anual</h3>
-                <div class="value success">$8.1M</div>
+                <div class="value success">$8.100.000</div>
                 <p class="subtext">Promedio por ano fiscal</p>
             </div>
             <div class="metric-card critical">
                 <h3>Situacion Critica - Octubre 2025</h3>
-                <div class="value">$12.0M</div>
+                <div class="value">$8.100.000</div>
                 <p class="subtext">Pago maximo del periodo (+70%)</p>
                 <span class="alert-badge">CRITICO</span>
             </div>
             <div class="metric-card">
                 <h3>Periodo Bajo</h3>
-                <div class="value success">$222K</div>
+                <div class="value success">$222.000</div>
                 <p class="subtext">Minimo registrado</p>
             </div>
         </div>
         <div class="recommendations critical">
             <h3>Analisis Critico - Octubre 2025</h3>
             <ul>
-                <li><strong>Remanente agotado:</strong> Cae de $101.8M a $0.0M</li>
-                <li><strong>Pago maximo:</strong> $12.0M (+70%)</li>
+                <li><strong>Remanente agotado:</strong> Cae de $101.800.000 a $0</li>
+                <li><strong>Pago maximo:</strong> $8.100.000 (+70%)</li>
                 <li><strong>Recomendacion:</strong> Revisar concentracion de pagos</li>
             </ul>
         </div>
@@ -359,6 +369,46 @@
             });
         });
         renderTable();
+        
+// Crear gráficos
+const ctx1 = document.getElementById('chartRemanente').getContext('2d');
+new Chart(ctx1, {
+    type: 'line',
+    data: {
+        labels: fiscalData.map(d => d.month),
+        datasets: [{
+            label: 'Remanente Fiscal ($M)',
+            data: fiscalData.map(d => d.remanente),
+            borderColor: '#3b82f6',
+            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+            tension: 0.4,
+            fill: true
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: true } }
+    }
+});
+
+const ctx2 = document.getElementById('chartPagos').getContext('2d');
+new Chart(ctx2, {
+    type: 'bar',
+    data: {
+        labels: fiscalData.map(d => d.month),
+        datasets: [{
+            label: 'Pago F29 ($M)',
+            data: fiscalData.map(d => d.pago),
+            backgroundColor: fiscalData.map(d => d.status === 'critical' ? '#ef4444' : d.status === 'warning' ? '#f59e0b' : '#3b82f6')
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: true } }
+    }
+});
     </script>
 </body>
 </html>
