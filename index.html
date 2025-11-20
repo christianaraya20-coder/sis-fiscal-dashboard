@@ -177,6 +177,10 @@
     <h3 style="margin-bottom: 1rem; color: var(--color-text);">Pagos Mensuales F29</h3>
     <canvas id="chartPagos" style="max-height: 300px;"></canvas>
   </div>
+                <div style="background: white; border: 1px solid var(--color-border); border-radius: 0.75rem; padding: 1.5rem;">
+                    <h3 style="margin-bottom: 1rem; color: var(--color-text);">Evolucion Completa - Remanente, Pago y Credito</h3>
+                    <canvas id="graficoEvolucion" style="max-height: 300px;"></canvas>
+                </div>
 </div>
         .table-wrapper {
             overflow-x: auto;
@@ -344,9 +348,9 @@
                 const statusClass = row.status === 'critical' || row.status === 'warning' ? 'negative' : row.status === 'excellent' || row.status === 'good' ? 'positive' : '';
                 tr.innerHTML = `
                     <td>${row.month}</td>
-                    <td class="numeric ${row.status === 'critical' ? 'negative' : row.status === 'good' || row.status === 'excellent' ? 'positive' : ''}">${row.remanente.toFixed(1)}</td>
-                    <td class="numeric ${row.pago > 10 ? 'negative' : row.pago < 7 ? 'positive' : ''}">${row.pago.toFixed(2)}</td>
-                    <td class="numeric">${row.credito.toFixed(2)}</td>
+                    <td class="numeric ${row.status === 'critical' ? 'negative' : row.status === 'good' || row.status === 'excellent' ? 'positive' : ''}">${'$' + (row.remanente * 1000000).toLocaleString('es-CL')}</td>
+                    <td class="numeric ${row.pago > 10 ? 'negative' : row.pago < 7 ? 'positive' : ''}">${'$' + (row.pago * 1000000).toLocaleString('es-CL')}</td>
+                    <td class="numeric">${'$' + (row.credito * 1000000).toLocaleString('es-CL')}</td>
                     <td><span class="${statusClass}">${statusText}</span></td>
                 `;
                 tbody.appendChild(tr);
@@ -409,6 +413,8 @@ new Chart(ctx2, {
         plugins: { legend: { display: true } }
     }
 });
+
+        const ctx3 = document.getElementById('graficoEvolucion').getContext('2d');
     </script>
 </body>
 </html>
